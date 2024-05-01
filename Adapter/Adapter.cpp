@@ -71,6 +71,42 @@ public:
         }
     }
 };
+// Адаптер класса
+template <typename T> 
+class StackAdapter : public Stack<T> ,private List<T>{
+public:
+    void push(T element) override 
+    {
+        List<T>::addToEnd(element);
+    }
+    T pop() override 
+    {
+        return List<T>::removeFromEnd();
+    }
+    bool isEmpty() const override 
+    {
+        return List<T>::isEmpty();
+    }
+};
+int main() {
+    Stack<int>* stackint = new StackAdapter<int>();
+    stackint->push(1);
+    stackint->push(2);
+    stackint->push(3);
+    stackint->push(4);
+    while (!stackint->isEmpty()) {
+        cout << stackint->pop() << endl;
+    }
+    Stack<string>* stackstring = new StackAdapter<string>();
+    stackstring->push("A");
+    stackstring->push("B");
+    stackstring->push("C");
+    stackstring->push("D");
+    while (!stackstring->isEmpty()) {
+        cout << stackstring->pop() << endl;
+    }
 
+    
+}
 
 
